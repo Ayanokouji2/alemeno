@@ -1,12 +1,24 @@
 import {useParams} from 'react-router-dom'
-import courses from '../data/web_courses.json'
+// import courses from '../data/web_courses.json'
+import {enrollCourse} from '../redux/slice/course.slice'
+import {useDispatch, useSelector} from 'react-redux'
+import {Course} from '../types/courseType'
+import {toast} from 'react-toastify'
 
 export default function CourseDetails() {
-	const {id} = useParams<{id: string}>()
-	const course = courses.courseData.find(
-		course => course.id === parseInt(id as string),
-	)
-
+	const course = useSelector((state: any) => {
+		const courses = state.course
+		const {id} = useParams<{id: string}>()
+		const index = parseInt(id!)
+		return courses[index - 1]
+	})
+	const dispatch = useDispatch()
+	const handleEnroll = (index: number) => {
+		index--
+		console.log(index)
+		dispatch(enrollCourse(index))
+		toast('Course Enrolled...')
+	}
 	const getStatusClasses = (status: string) => {
 		switch (status) {
 			case 'Open':
@@ -80,18 +92,21 @@ export default function CourseDetails() {
 							Syllabus
 						</h2>
 						<ul className='list-disc list-inside text-gray-700 space-y-2'>
-							{course.syllabus.map((item, index) => (
-								<li key={index} className='text-base'>
-									<strong>Week {item.week}: </strong>
-									{item.topic} - {item.content}
-								</li>
-							))}
+							{course.syllabus.map(
+								(item: Course, index: number) => (
+									<li key={index} className='text-base'>
+										<strong>Week {item.week}: </strong>
+										{item.topic} - {item.content}
+									</li>
+								),
+							)}
 						</ul>
 					</div>
 
 					<div className='flex justify-between items-center'>
 						<button
 							disabled={course.enrollmentStatus !== 'Open'}
+							onClick={() => handleEnroll(course.id)}
 							className='disabled:bg-gray-400 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out'>
 							Enroll Now
 						</button>

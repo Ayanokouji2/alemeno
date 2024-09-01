@@ -27,7 +27,9 @@ export default function Card({
 				<p className='text-gray-700 text-base font-medium'>
 					Instructor: {instructor}
 				</p>
-				<p className='text-gray-700 text-sm mt-2 font-mono'>{description}</p>
+				<p className='text-gray-700 text-sm mt-2 font-mono'>
+					{description}
+				</p>
 			</div>
 		</div>
 	)
