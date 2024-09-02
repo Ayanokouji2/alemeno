@@ -1,0 +1,32 @@
+
+
+@media screen and (max-width: 768px) {
+    .active {
+        transform: translate(0) !important;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .nav-items {
+        font-size: 1.1rem;
+        position: fixed; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        width: 100%;
+        height: 100vh;
+        padding: 2rem;
+        top: 0;
+        right: 0;
+        background-color: rgb(225, 228, 245);
+        transform: translateX(100vw); 
+        transition: transform 0.3s ease; 
+    }
+
+    .nav-items.active {
+        transform: translateX(0); 
+    }
+}
